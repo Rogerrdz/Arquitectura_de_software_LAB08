@@ -9,14 +9,14 @@ Implementación completa de una arquitectura de **alta disponibilidad** en Azure
 Este proyecto moderniza el laboratorio tradicional de balanceo de carga migrando de acciones manuales a **IaC** completa. Implementa una arquitectura reproducible, segura, versionable y con integración continua automatizada.
 
 ### Características principales:
-- ✅ **Módulos Terraform** reutilizables (vnet, lb, compute)
-- ✅ **Backend remoto** con state locking en Azure Storage
-- ✅ **NSG endurecido** (80/TCP público, 22/TCP solo desde IP autorizada)
-- ✅ **High Availability** (Load Balancer L4 con 2+ VMs, Availability Set)
-- ✅ **Cloud-init** para provisión automática de Nginx
-- ✅ **GitHub Actions** con validación automática (fmt, validate, plan)
-- ✅ **OIDC** para autenticación sin secretos largos
-- ✅ **Tagging** consistente (owner, course, env, expires)
+- **Módulos Terraform** reutilizables (vnet, lb, compute)
+- **Backend remoto** con state locking en Azure Storage
+- **NSG endurecido** (80/TCP público, 22/TCP solo desde IP autorizada)
+- **High Availability** (Load Balancer L4 con 2+ VMs, Availability Set)
+- **Cloud-init** para provisión automática de Nginx
+- **GitHub Actions** con validación automática (fmt, validate, plan)
+- **OIDC** para autenticación sin secretos largos
+- **Tagging** consistente (owner, course, env, expires)
 
 ---
 
@@ -155,9 +155,9 @@ terraform validate          # Valida sintaxis y referencias
 
 **Prueba de seguridad - NSG:**
 Verifica en Azure Portal que NSG solo permite:
-- ✅ 80/TCP desde Internet
-- ✅ 22/TCP desde tu IP /32
-- ✅ Health probe desde AzureLoadBalancer
+- 80/TCP desde Internet
+- 22/TCP desde tu IP /32
+- Health probe desde AzureLoadBalancer
 
 **Prueba de balanceo:**
 ```bash
@@ -173,11 +173,11 @@ for ($i=1; $i -le 10; $i++) {
 ### Validación en GitHub Actions
 
 El pipeline automático ejecuta en cada PR:
-- ✅ `terraform fmt` - Verifica formateo
-- ✅ `terraform validate` - Valida configuration
-- ✅ `terraform plan` - Genera plan
-- ✅ Publica artefacto con el plan
-- ✅ Comenta plan en la PR
+- `terraform fmt` - Verifica formateo
+- `terraform validate` - Valida configuration
+- `terraform plan` - Genera plan
+- Publica artefacto con el plan
+- Comenta plan en la PR
 
 ---
 
@@ -315,7 +315,7 @@ Este proyecto está bajo licencia **MIT** - ver [LICENSE.md](LICENSE.md) para de
 
 ---
 
-# 📊 Evidencias y Resultados
+# Evidencias 
 
 ## Diagramas Arquitectónicos
 
@@ -344,7 +344,7 @@ Este proyecto está bajo licencia **MIT** - ver [LICENSE.md](LICENSE.md) para de
 
 ---
 
-## 🔐 Configuración de Infraestructura
+##  Configuración de Infraestructura
 
 ### Autenticación Azure CLI
 ![Azure Login](images/az_login.png)
@@ -370,7 +370,7 @@ Este proyecto está bajo licencia **MIT** - ver [LICENSE.md](LICENSE.md) para de
 
 ---
 
-## ✅ Despliegue de Infraestructura
+## Despliegue de Infraestructura
 
 ### Terraform Init con Backend
 
@@ -398,7 +398,7 @@ Este proyecto está bajo licencia **MIT** - ver [LICENSE.md](LICENSE.md) para de
 
 ---
 
-## 🌐 Validación del Load Balancer
+## Validación del Load Balancer
 
 ### Load Balancer en Azure Portal
 
@@ -412,7 +412,7 @@ Este proyecto está bajo licencia **MIT** - ver [LICENSE.md](LICENSE.md) para de
 
 ---
 
-## 🧪 Pruebas de Balanceo de Carga
+## Pruebas de Balanceo de Carga
 
 ### Test 1: Respuesta Nginx - VM1
 
@@ -434,7 +434,7 @@ Este proyecto está bajo licencia **MIT** - ver [LICENSE.md](LICENSE.md) para de
 
 ---
 
-## 🔄 CI/CD y GitHub Actions
+## CI/CD y GitHub Actions
 
 ### OIDC - App Registration
 
@@ -456,7 +456,7 @@ Este proyecto está bajo licencia **MIT** - ver [LICENSE.md](LICENSE.md) para de
 
 ---
 
-# 🤔 Preguntas de Reflexión Técnica
+#  Preguntas de Reflexión Técnica
 
 ## 1) ¿Por qué L4 LB vs Application Gateway (L7) en tu caso? ¿Qué cambiaría?
 
@@ -466,14 +466,14 @@ Este proyecto está bajo licencia **MIT** - ver [LICENSE.md](LICENSE.md) para de
 |--------|------------------|------------------------|
 | **Capa OSI** | Transporte (TCP/UDP) | Aplicación (HTTP/HTTPS) |
 | **Decisiones de Routing** | IP + Puerto | URL path, hostname, cookies |
-| **Rendimiento** | ⭐⭐⭐⭐⭐ Ultra alto | ⭐⭐⭐⭐ Muy alto |
+| **Rendimiento** | Ultra alto | Muy alto |
 | **Latencia** | < 1ms | 10-50ms |
 | **Throughput** | Millones req/seg | Millones req/seg |
-| **Complejidad** | 🟢 Simple | 🟠 Moderada |
-| **Costo** | 💰 $16/mes | 💰 $0.25/h ($180/mes) |
+| **Complejidad** | Simple | Moderada |
+| **Costo** | $16/mes | $0.25/h ($180/mes) |
 | **Casos de Uso** | TCP puro, gaming, IoT | APIs web, microservicios |
 
-### Decisión para LAB_08: **L4 Load Balancer ✅**
+### Decisión para LAB_08: **L4 Load Balancer (recomendado)**
 
 **Razones:**
 1. **Simplicidad**: HTTP básico sin lógica de routing compleja
@@ -501,11 +501,11 @@ Este proyecto está bajo licencia **MIT** - ver [LICENSE.md](LICENSE.md) para de
 
 | Riesgo | Severidad | Mitigación Implementada |
 |--------|-----------|------------------------|
-| **Ataques de fuerza bruta SSH** | 🔴 CRÍTICA | ✅ SSH solo desde /32 autorizado |
-| **Explotación cero-day SSH** | 🔴 CRÍTICA | ✅ Clave pública (no contraseña débil) |
-| **Lateral movement desde 22** | 🟠 ALTA | ✅ NSG restringe a subnet |
-| **Reconocimiento de banner SSH** | 🟡 MEDIA | ✅ SSH no visible desde Internet |
-| **Acceso no autorizado** | 🔴 CRÍTICA | ✅ IP específica /32 requerida |
+| **Ataques de fuerza bruta SSH** | CRÍTICA | SSH solo desde /32 autorizado |
+| **Explotación cero-day SSH** | CRÍTICA | Clave pública (no contraseña débil) |
+| **Lateral movement desde 22** | ALTA | NSG restringe a subnet |
+| **Reconocimiento de banner SSH** | MEDIA | SSH no visible desde Internet |
+| **Acceso no autorizado** | CRÍTICA | IP específica /32 requerida |
 
 ### Mitigaciones Implementadas
 
@@ -517,7 +517,7 @@ security_rule {
   destination_port_range     = "22"
 }
 ```
-✅ Solo TÚ puedes acceder, nadie más en Internet
+Solo TÚ puedes acceder, nadie más en Internet
 
 **2. SSH por clave pública (no contraseña):**
 ```hcl
@@ -527,14 +527,14 @@ admin_ssh_key {
   public_key = file(var.ssh_public_key)
 }
 ```
-✅ Imposible acceso por fuerza bruta de contraseñas
+Imposible acceso por fuerza bruta de contraseñas
 
 **3. Subnet isolation:**
 ```hcl
 subnet-web: 10.42.1.0/24  (Internet → LB solo)
 subnet-mgmt: 10.42.2.0/24  (Opcional, aplicación interna)
 ```
-✅ VMs no expuestas directamente, solo LB
+VMs no expuestas directamente, solo LB
 
 **4. Cloud-init sin password:**
 ```yaml
@@ -542,7 +542,7 @@ runcmd:
   - usermod -L root              # Root sin login
   - passwd -l ubuntu             # Usuario ubuntu sin password
 ```
-✅ Sin passwords en el sistema
+Sin passwords en el sistema
 
 ### Mitigaciones Adicionales (NO IMPLEMENTADAS - para producción):
 
@@ -569,10 +569,10 @@ runcmd:
 ```
 
 ### Conclusión sobre Seguridad SSH:
-**⭐⭐⭐⭐ (4/5 estrellas) - Robusto para lab, mejorable para producción**
-- ✅ Clave pública + IP restringida = muy seguro
-- ✅ NSG minimalista correcto
-- 🟡 Azure Bastion sería upgrade recomendado
+**(4/5 estrellas) - Robusto para lab, mejorable para producción**
+- Clave pública + IP restringida = muy seguro
+- NSG minimalista correcto
+- Azure Bastion sería upgrade recomendado
 
 ---
 
@@ -582,181 +582,13 @@ runcmd:
 
 | Área | Mejora | Impacto | Esfuerzo |
 |------|--------|--------|---------|
-| **Disponibilidad** | VM Scale Set auto-scaling | 🔴 CRÍTICA | 🟠 Medio |
-| **Observabilidad** | Azure Monitor + alertas | 🔴 CRÍTICA | 🟠 Medio |
-| **Seguridad** | Azure Bastion + JIT | 🔴 CRÍTICA | 🟡 Bajo |
-| **Diaster Recovery** | Backup/Restore automático | 🟠 ALTA | 🟠 Medio |
-| **Performance** | CDN + caching | 🟡 MEDIA | 🟡 Bajo |
-| **Compliance** | Policy as Code + Audit | 🟠 ALTA | 🟢 Alto |
-| **Costos** | Reserved Instances | 🟡 MEDIA | 🟢 Bajo |
-
-### Implementación Recomendada para Producción
-
-```hcl
-# =====================================
-# 1. AUTO-SCALING CON VMSS
-# =====================================
-resource "azurerm_windows_virtual_machine_scale_set" "prod" {
-  name              = "vmss-${var.prefix}"
-  location          = var.location
-  sku               = "Standard_D2s_v3"
-  
-  auto_scaling_policy {
-    scale_in_policy  = "OldestInstance"
-    metric_trigger {
-      metric_name        = "Percentage CPU"
-      resource_group_name = azurerm_resource_group.this.name
-      statistic          = "Average"
-      time_grain         = "PT1M"
-      time_window        = "PT5M"
-      threshold          = 75  # Escala UP si > 75%
-    }
-    scale_out_policy = 2  # Máximo 2 instancias nuevas
-  }
-}
-# Beneficio: Maneja picos automáticamente, reduce costos en valle
-
-# =====================================
-# 2. OBSERVABILIDAD COMPLETA
-# =====================================
-resource "azurerm_monitor_diagnostic_setting" "prod" {
-  name               = "diag-lb-${var.prefix}"
-  target_resource_id = azurerm_lb.this.id
-  log_analytics_workspace_id = azurerm_log_analytics_workspace.this.id
-
-  log {
-    category = "LoadBalancerAlertEvent"
-    enabled  = true
-  }
-
-  metric {
-    category = "AllMetrics"
-    enabled  = true
-  }
-}
-
-resource "azurerm_monitor_metric_alert" "probe_health" {
-  name                = "alert-unhealthy-probe-${var.prefix}"
-  resource_group_name = azurerm_resource_group.this.name
-  scopes              = [azurerm_lb.this.id]
-  
-  criteria {
-    metric_name              = "DipAvailability"
-    operator                 = "LessThan"
-    threshold                = 100  # Alerta si no todas VMs healthy
-    aggregation              = "Average"
-    metric_namespace         = "Microsoft.Network/loadBalancers"
-  }
-  
-  action {
-    action_group_id = azurerm_monitor_action_group.prod_team.id
-  }
-  # Beneficio: Notificación inmediata si alguna VM falla
-}
-
-# =====================================
-# 3. SEGURIDAD AVANZADA
-# =====================================
-resource "azurerm_bastion_host" "prod" {
-  name                = "bastion-${var.prefix}"
-  location            = var.location
-  resource_group_name = azurerm_resource_group.this.name
-  subnet_id           = azurerm_subnet.bastion.id
-  
-  ip_configuration {
-    name              = "bastion-ip"
-    subnet_id         = azurerm_subnet.bastion.id
-    public_ip_address_id = azurerm_public_ip.bastion.id
-  }
-}
-# Beneficio: SSH sin exponer puertos a Internet
-
-resource "azurerm_security_group" "nsg_hardened" {
-  security_rule = [
-    # L7 HTTP analysis + WAF
-    {
-      name                       = "allow-http-with-waf"
-      protocol                   = "Tcp"
-      destination_port_range     = "80"
-      source_address_prefix      = "*"
-      access                     = "Allow"
-    },
-    # DDoS Protection
-    {
-      name                       = "allow-tcp-optimized"
-      protocol                   = "Tcp"
-      destination_port_range     = "80"
-      source_address_prefix      = "Internet"
-      access                     = "Allow"
-      priority                   = 100
-    }
-  ]
-}
-# Beneficio: Defensa contra DDoS, SQLi, XSS, etc.
-
-# =====================================
-# 4. DISASTER RECOVERY
-# =====================================
-resource "azurerm_backup_policy_vm" "prod" {
-  name                = "backup-${var.prefix}"
-  resource_group_name = azurerm_resource_group.this.name
-  recovery_vault_name = azurerm_recovery_services_vault.this.name
-  
-  backup {
-    frequency = "Daily"
-    time      = "03:00"
-  }
-  
-  retention_daily {
-    count = 30  # 30 días diarios
-  }
-  
-  retention_weekly {
-    count    = 12  # 12 semanas semanales
-    weekdays = ["Sunday"]
-  }
-}
-# Beneficio: RTO < 1 hora, RPO = 24 horas
-
-# =====================================
-# 5. CONFORMIDAD Y AUDITORÍA
-# =====================================
-resource "azurerm_policy_assignment" "prod_compliance" {
-  name              = "enforce-tags-${var.prefix}"
-  scope             = azurerm_resource_group.this.id
-  policy_definition_id = "/subscriptions/.../Microsoft.Authorization/policyDefinitions/enforce-tags"
-  
-  parameters = jsonencode({
-    tagName = {
-      value = "Environment"
-    }
-  })
-}
-
-resource "azurerm_monitor_log_analytics_workspace" "prod" {
-  name                = "law-${var.prefix}"
-  resource_group_name = azurerm_resource_group.this.name
-  
-  data_retention_in_days = 90  # Auditoría por 3 meses
-}
-# Beneficio: Compliance con GDPR, PCI-DSS, SOC2
-
-# =====================================
-# 6. COSTOS OPTIMIZADOS
-# =====================================
-resource "azurerm_marketplace_agreement" "prod_reserved" {
-  offer  = "WindowsServer"
-  publisher = "MicrosoftWindowsServer"
-  plan   = "2019-Datacenter-Reserved-1year"
-  # Ahorros: ~30% con Reserved Instances de 1 año
-}
-
-variable "prod_vm_size" {
-  default = "Standard_D2s_v3"  # Más potencia
-  # En dev era: Standard_B1s
-}
-# Beneficio: Reducción de costos TCO
-```
+| **Disponibilidad** | VM Scale Set auto-scaling | CRÍTICA | Medio |
+| **Observabilidad** | Azure Monitor + alertas | CRÍTICA | Medio |
+| **Seguridad** | Azure Bastion + JIT | CRÍTICA | Bajo |
+| **Diaster Recovery** | Backup/Restore automático | ALTA | Medio |
+| **Performance** | CDN + caching | MEDIA | Bajo |
+| **Compliance** | Policy as Code + Audit | ALTA | Alto |
+| **Costos** | Reserved Instances | MEDIA | Bajo |
 
 ### Comparativa Dev vs Prod
 
@@ -792,34 +624,23 @@ graph LR
 
 **Total: ~3-4 semanas** de desarrollo + validación
 
-### Conclusión Producción:
-**⭐⭐ (2/5 estrellas) - El código actual es de LAB, necesita arquitectura más robusta para PROD**
-- ✅ Base sólida (módulos, tfstate remoto, OIDC)
-- 🟡 Necesita: Auto-scaling, Monitoring, Bastion, Backups
-- 🔴 NO recomendado deployar en prod "tal cual"
-
----
-
-# 📋 Conclusión Final
+# Conclusión Final
 
 Este laboratorio demuestra:
-- ✅ **IaC sólida**: Módulos reutilizables, backend remoto, validación automática
-- ✅ **Seguridad práctica**: NSG endurecido, SSH por clave, IP restringida
-- ✅ **DevOps moderno**: GitHub Actions, OIDC, CI/CD completo
-- 🟡 **Listo para educación**: Perfecto para aprender Azure + Terraform
-- 🔴 **NO para producción**: Requiere mejoras de HA y monitoring
-
-**Calificación Final: 95/100** ⭐⭐⭐⭐⭐
+- **IaC sólida**: Módulos reutilizables, backend remoto, validación automática
+- **Seguridad práctica**: NSG endurecido, SSH por clave, IP restringida
+- **DevOps moderno**: GitHub Actions, OIDC, CI/CD completo
+- **Listo para educación**: Perfecto para aprender Azure + Terraform
+- **NO para producción**: Requiere mejoras de HA y monitoring
 
 ---
 
-## 📞 Contacto y Soporte
+## Contacto y Soporte
 
 - **GitHub Issues**: [Reportar bugs](https://github.com/Rogerrdz/Arquitectura_de_software_LAB08/issues)
-- **Email**: [Tu email si aplica]
-- **Discord/Teams**: [Grupo del curso]
+- **Email**: rogeralexander902@gmail.com
 
 ---
 
 **Última actualización**: Marzo 27, 2026
-**Estado**: ✅ Producción-ready para LAB
+
