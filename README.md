@@ -280,7 +280,7 @@ Para más detalles, revisa [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ## Versioning
 
-Usamos [SemVer](http://semver.org/) para versionado. 
+Usé [SemVer](http://semver.org/) para versionado. 
 
 Versiones disponibles: ver [tags del repositorio](https://github.com/Rogerrdz/Arquitectura_de_software_LAB08/tags)
 
@@ -297,12 +297,6 @@ Versiones disponibles: ver [tags del repositorio](https://github.com/Rogerrdz/Ar
 * **Equipo ARSW/BluePrints** - Diseño del laboratorio
 
 Ver también la lista de [contributors](https://github.com/Rogerrdz/Arquitectura_de_software_LAB08/contributors)
-
----
-
-## License
-
-Este proyecto está bajo licencia **MIT** - ver [LICENSE.md](LICENSE.md) para detalles
 
 ---
 
